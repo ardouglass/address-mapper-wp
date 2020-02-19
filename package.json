@@ -1,0 +1,22 @@
+{
+  "name": "address-mapper",
+  "description": "A WordPress plugin that allows users to upload CSVs of addresses, and then query them using a custom endpoint of the WordPress REST API.",
+  "private": true,
+  "scripts": {
+    "build": "webpack --mode=production",
+    "watch": "webpack --watch --mode=development",
+    "start": "npm run watch"
+  },
+  "browserslist": "> 0.25%, last 2 versions, not dead",
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "babel-loader": "^8.0.6",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "axios": "^0.19.2"
+  }
+}
