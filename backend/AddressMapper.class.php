@@ -16,14 +16,17 @@ class AddressMapper {
    * Adds the menu to the primary interface
    */
   public function add_menu_item() {
-    add_menu_page('Address Mapper', 'Address Mapper', 'edit_pages', 'address_mapper', array($this, 'load_html'), 'dashicons-location-alt', 50);
+    add_menu_page('Address Mapper', 'Address Mapper', 'edit_pages', 'address_mapper', array($this, 'html'), 'dashicons-location-alt', 50);
   }
 
   /**
-   * Loads the HTML content for the scripts to hook into
+   * Outputs the HTML content for the scripts to hook into
    */
-  public function load_html() {
-    echo file_get_contents(ADDRESS_MAPPER_PATH.'dist/address-mapper.html');
+  public function html() { ?>
+    <div class="wrap">
+      <div id="address-mapper-hook"></div>
+    </div>
+  <?php
   }
 
   /**
