@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import UploadPage from 'pages/UploadPage';
 import SettingsPage from 'pages/SettingsPage';
+import styles from './Navigation.css';
 
 function Navigation() {
   const [activeTab, setActiveTab] = useState(0);
@@ -16,10 +17,10 @@ function Navigation() {
       key={title}
       className={clsx({
         'nav-tab': true,
+        [styles.button]: true,
         'nav-tab-active': index === activeTab,
       })}
       onClick={() => setActiveTab(index)}
-      style={{ cursor: 'pointer' }}
     >
       {title}
     </button>
