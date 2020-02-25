@@ -7,6 +7,12 @@ module.exports = {
     filename: 'address-mapper.min.js',
     path: path.resolve(__dirname, '../dist'),
   },
+  resolve: {
+    alias: {
+      pages: path.resolve(__dirname, '../frontend/pages/'),
+      components: path.resolve(__dirname, '../frontend/components/'),
+    },
+  },
   module: {
     rules: [
       {

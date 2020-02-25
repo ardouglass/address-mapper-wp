@@ -1,8 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AddressMapper from './AddressMapper';
+import App from './App';
 
-ReactDOM.render(
-  <AddressMapper />,
-  document.getElementById('address-mapper-hook')
-);
+ReactDOM.render(<App />, document.getElementById('address-mapper-hook'));
