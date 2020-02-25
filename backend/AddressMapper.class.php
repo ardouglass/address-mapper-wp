@@ -33,6 +33,9 @@ class AddressMapper {
    * Loads the compiled admin scripts
    */
   public function enqueue_scripts() {
-    wp_enqueue_script('address-mapper-admin-scripts', ADDRESS_MAPPER_URL.'dist/address-mapper.min.js', array(), null, true);
+    $current_screen_id = get_current_screen()->id;
+    if($current_screen_id == 'toplevel_page_address_mapper') {
+      wp_enqueue_script('address-mapper-admin-scripts', ADDRESS_MAPPER_URL.'dist/address-mapper.min.js', array(), null, true);
+    }
   }
 }
