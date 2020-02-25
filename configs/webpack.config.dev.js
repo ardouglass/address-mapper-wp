@@ -28,7 +28,7 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: '[path][name]__[local]--[hash:base64:5]',
+                localIdentName: '[name]__[local]--[hash:base64:5]',
                 context: path.resolve(__dirname, 'frontend'),
               },
             },
