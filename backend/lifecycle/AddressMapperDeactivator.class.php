@@ -10,11 +10,4 @@ class AddressMapperDeactivator {
   public static function deactivate() {
 
   }
-
-  /**
-   * Drops the table created in AddressMapperActivator::initializeDatabase
-   */
-  private static function destroyDatabase() {
-
-  }
 }

@@ -19,28 +19,38 @@ define('ADDRESS_MAPPER_URL', plugin_dir_url(__FILE__));
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in backend/AddressMapperActivator.class.php
+ * This action is documented in backend/lifecycle/AddressMapperActivator.class.php
  */
 function activate_address_mapper() {
-	require_once ADDRESS_MAPPER_PATH.'backend/AddressMapperActivator.class.php';
+	require_once ADDRESS_MAPPER_PATH.'backend/lifecycle/AddressMapperActivator.class.php';
 	AddressMapperActivator::activate();
 }
 register_activation_hook(__FILE__, 'activate_address_mapper');
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in backend/AddressMapperDeactivator.class.php
+ * This action is documented in backend/lifecycle/AddressMapperDeactivator.class.php
  */
 function deactivate_address_mapper() {
-	require_once ADDRESS_MAPPER_PATH.'backend/AddressMapperDeactivator.class.php';
+	require_once ADDRESS_MAPPER_PATH.'backend/lifecycle/AddressMapperDeactivator.class.php';
 	AddressMapperDeactivator::deactivate();
 }
 register_deactivation_hook(__FILE__, 'deactivate_address_mapper');
 
 /**
+ * The code that runs during plugin uninstallation.
+ * This action is documented in backend/lifecycle/AddressMapperUninstaller.class.php
+ */
+function uninstall_address_mapper() {
+	require_once ADDRESS_MAPPER_PATH.'backend/lifecycle/AddressMapperUninstaller.class.php';
+	AddressMapperUninstaller::uninstall();
+}
+register_uninstall_hook(__FILE__, 'uninstall_address_mapper');
+
+/**
  * The core plugin class.
  */
-require ADDRESS_MAPPER_PATH.'backend/AddressMapper.class.php';
+require ADDRESS_MAPPER_PATH.'backend/lifecycle/AddressMapper.class.php';
 
 /**
  * Begins execution of the plugin.
