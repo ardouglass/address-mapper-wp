@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import clsx from 'clsx';
 import UploadPage from 'pages/UploadPage';
 import SettingsPage from 'pages/SettingsPage';
@@ -8,11 +8,11 @@ function Navigation() {
   const [activeTab, setActiveTab] = useState(0);
 
   const tabOptions = [
-    { title: 'Upload Data', component: UploadPage },
-    { title: 'Settings', component: SettingsPage },
+    {title: 'Upload Data', component: UploadPage},
+    {title: 'Settings', component: SettingsPage},
   ];
 
-  const tabs = tabOptions.map(({ title }, index) => (
+  const tabs = tabOptions.map(({title}, index) => (
     <button
       key={title}
       className={clsx({

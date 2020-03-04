@@ -18,5 +18,10 @@
     "issues": "https://github.com/ardouglass/address-mapper/issues",
     "source": "https://github.com/ardouglass/address-mapper",
     "docs": "https://github.com/ardouglass/address-mapper/blob/master/README.md"
+  },
+  "autoload": {
+    "psr-4": {
+      "AddressMapper\\": "backend/"
+    }
   }
 }
