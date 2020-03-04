@@ -3,17 +3,18 @@
   "description": "A WordPress plugin that allows users to upload CSVs of addresses, and then query them using a custom endpoint of the WordPress REST API.",
   "private": true,
   "scripts": {
-    "build": "webpack -p",
-    "watch": "webpack --watch",
+    "build": "webpack -p --config webpack.config.prod.js",
+    "watch": "webpack --watch --config webpack.config.dev.js",
     "start": "npm run watch"
   },
-  "browserslist": "> 0.25%, last 2 versions, not dead",
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-react": "^7.8.3",
+    "@prettier/plugin-php": "^0.13.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.4.2",
+    "prettier": "^1.19.1",
     "style-loader": "^1.1.3",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11"
@@ -25,5 +26,20 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "spark-md5": "^3.0.0"
+  },
+  "browserslist": "> 0.25%, last 2 versions, not dead",
+  "prettier": {
+    "tabWidth": 2,
+    "useTabs": false,
+    "singleQuote": true,
+    "braceStyle": "1tbs",
+    "semi": true,
+    "quoteProps": "as-needed",
+    "jsxSingleQuote": false,
+    "trailingComma": "es5",
+    "bracketSpacing": false,
+    "jsxBracketSameLine": false,
+    "arrowParens": "avoid",
+    "endOfLine": "lf"
   }
 }
