@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   entry: './frontend/index.js',
   output: {
     filename: 'address-mapper.min.js',
@@ -9,8 +9,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      pages: path.resolve(__dirname, '../frontend/pages/'),
-      components: path.resolve(__dirname, '../frontend/components/'),
+      pages: path.resolve(__dirname, 'frontend/pages/'),
+      components: path.resolve(__dirname, 'frontend/components/'),
     },
   },
   module: {
@@ -23,12 +23,13 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          { loader: 'style-loader' },
+          {loader: 'style-loader'},
           {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: '[hash:base64:5]',
+                localIdentName: '[name]__[local]--[hash:base64:5]',
+                context: path.resolve(__dirname, 'frontend'),
               },
             },
           },
