@@ -58,12 +58,24 @@ class Core {
         true
       );
 
-      wp_localize_script(
-        'address-mapper-admin-scripts',
-        'addressMapperApiSettings',
-        ['nonce' => wp_create_nonce('wp_rest')]
-      );
+      $this->hydrate_scripts();
     }
+  }
+
+  private function hydrate_scripts() {
+    $base_url = '/wp-json/' . Config::$endpoints_base;
+    $nonce = wp_create_nonce('wp_rest');
+    $google_maps_api_key = Endpoints\Settings::get_google_maps_api_key(true);
+
+    wp_localize_script(
+      'address-mapper-admin-scripts',
+      'addressMapperApiSettings',
+      [
+        'baseUrl' => $base_url,
+        'nonce' => $nonce,
+        'googleMapsApiKey' => $google_maps_api_key
+      ]
+    );
   }
 
   /**

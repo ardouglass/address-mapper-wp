@@ -47,14 +47,7 @@ class Config {
     }
 
     // Check the capability and return true or false
-    $can_do = current_user_can($capability);
-
-    $error = $can_do
-      ? 'User can edit_others_posts.'
-      : 'User can not edit_others_posts.';
-    error_log($error, 0, 'andrew@dou.glass');
-
-    return $can_do;
+    return current_user_can($capability);
   }
 }
 
