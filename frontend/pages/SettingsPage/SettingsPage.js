@@ -1,23 +1,35 @@
-import React from 'react';
+import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 
-function SettingsPage() {
+function SettingsPage({googleMapsApiKey, saveChanges}) {
+  const [googleMapsApiKeyValue, setGoogleMapsApiKeyValue] = useState(
+    googleMapsApiKey
+  );
+
+  const onSubmitHandler = evt => {
+    evt.preventDefault();
+    saveChanges({googleMapsApiKeyValue});
+  };
+
   return (
-    <div>
+    <form onSubmit={onSubmitHandler}>
       <h2>Google Maps Settings</h2>
       <table className="form-table" role="presentation">
         <tbody>
           <tr>
             <th scope="row">
-              <label htmlFor="googlemaps-api-key">Google Maps API key</label>
+              <label htmlFor="google-maps-api-key">Google Maps API key</label>
             </th>
             <td>
               <input
-                name="googlemaps-api-key"
+                name="google-maps-api-key"
                 type="text"
-                id="googlemaps-api-key"
+                id="google-maps-api-key"
                 className="regular-text"
+                value={googleMapsApiKeyValue}
+                onChange={evt => setGoogleMapsApiKeyValue(evt.target.value)}
               />
-              <p className="description" id="googlemaps-api-key-description">
+              <p className="description" id="google-maps-api-key-description">
                 <a href="https://developers.google.com/maps/documentation/javascript/get-api-key">
                   Get a Google Maps API key
                 </a>{' '}
@@ -28,10 +40,19 @@ function SettingsPage() {
         </tbody>
       </table>
       <p className="submit">
-        <button className="button button-primary">Save Changes</button>
+        <input
+          type="submit"
+          className="button button-primary"
+          value="Save Changes"
+        />
       </p>
-    </div>
+    </form>
   );
 }
+
+SettingsPage.propTypes = {
+  googleMapsApiKey: PropTypes.string.isRequired,
+  saveChanges: PropTypes.func.isRequired,
+};
 
 export default SettingsPage;
