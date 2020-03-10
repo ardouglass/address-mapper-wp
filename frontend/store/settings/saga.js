@@ -9,6 +9,8 @@ function* watchGetGoogleMapsApiKey() {
     const response = yield call(http.get, '/settings/google-maps-api-key');
     const data = mapKeys(response.data, (_val, key) => camelCase(key));
 
+    console.log(data);
+
     yield put(getGoogleMapsApiKey({status: 'success', payload: data}));
   } catch (error) {
     const message = error.response.data.message;

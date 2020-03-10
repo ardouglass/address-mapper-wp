@@ -40,24 +40,16 @@ class Settings {
   /**
    * Fetches the Google Maps API key out of the database.
    */
-  public static function get_google_maps_api_key($raw = false) {
+  public static function get_google_maps_api_key($request = null) {
     global $wpdb;
+    $address_mapper_settings_table = $wpdb->prefix . 'address_mapper_settings';
 
     // Get the value of the google maps api key from the database
     $result = $wpdb->get_var(
-      $wpdb->prepare(
-        'SELECT key_value
-        FROM ' .
-          $wpdb->prefix .
-          'address_mapper_settings
-        WHERE key_name = %s',
-        'google-maps-api-key'
-      )
+      "SELECT key_value
+        FROM $address_mapper_settings_table
+        WHERE key_name = 'google-maps-api-key'"
     );
-
-    if ($raw) {
-      return $result;
-    }
 
     return ['google-maps-api-key' => $result];
   }
@@ -67,6 +59,7 @@ class Settings {
    */
   public static function set_google_maps_api_key($request) {
     global $wpdb;
+    $address_mapper_settings_table = $wpdb->prefix . 'address_mapper_settings';
 
     // Get the posted data
     $params = $request->get_json_params();
@@ -74,12 +67,12 @@ class Settings {
 
     // Upsert into the database
     $result = $wpdb->replace(
-      $wpdb->prefix . 'address_mapper_settings',
+      $address_mapper_settings_table,
       [
         'key_name' => 'google-maps-api-key',
         'key_value' => $google_maps_api_key
       ],
-      '%s'
+      ['%s', '%s']
     );
 
     if ($result === false) {

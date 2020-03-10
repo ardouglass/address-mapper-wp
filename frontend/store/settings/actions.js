@@ -2,6 +2,7 @@
  * Action creators
  */
 function getGoogleMapsApiKey({status, payload}) {
+  console.log(payload);
   switch (status) {
     case 'success':
       return {
