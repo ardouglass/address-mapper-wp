@@ -40,7 +40,7 @@ class Settings {
   /**
    * Fetches the Google Maps API key out of the database.
    */
-  public static function get_google_maps_api_key($request) {
+  public static function get_google_maps_api_key($raw = false) {
     global $wpdb;
 
     // Get the value of the google maps api key from the database
@@ -54,6 +54,10 @@ class Settings {
         'google-maps-api-key'
       )
     );
+
+    if ($raw) {
+      return $result;
+    }
 
     return ['google-maps-api-key' => $result];
   }
@@ -79,9 +83,9 @@ class Settings {
     );
 
     if ($result === false) {
-      return new WP_Error(
+      return new \WP_Error(
         'update_error',
-        'Unable to update the Google Maps API key',
+        'Unable to update the Google Maps API key.',
         ['status' => 500]
       );
     }
