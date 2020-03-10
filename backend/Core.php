@@ -65,7 +65,9 @@ class Core {
   private function hydrate_scripts() {
     $base_url = '/wp-json/' . Config::$endpoints_base;
     $nonce = wp_create_nonce('wp_rest');
-    $google_maps_api_key = Endpoints\Settings::get_google_maps_api_key(true);
+    $google_maps_api_key = Endpoints\Settings::get_google_maps_api_key()[
+      'google-maps-api-key'
+    ];
 
     wp_localize_script(
       'address-mapper-admin-scripts',
