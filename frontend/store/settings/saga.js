@@ -1,45 +1,58 @@
 import {put, call, takeEvery, takeLatest} from 'redux-saga/effects';
 import http from 'utils/http';
-import {getGoogleMapsApiKey, setGoogleMapsApiKey} from 'store/settings/actions';
 import {addStatusMessage} from 'store/statusMessages/actions';
-import {camelCase, mapKeys} from 'lodash-es';
+import {
+  getGoogleMapsApiKeySuccess,
+  getGoogleMapsApiKeyFailure,
+  setGoogleMapsApiKeySuccess,
+  setGoogleMapsApiKeyFailure,
+} from 'store/settings/actions';
 
-function* watchGetGoogleMapsApiKey() {
+/**
+ * Handles all requests to query the Google Maps API key from the server
+ * @param {Object} _action - The Redux action object triggering this call
+ */
+function* watchGetGoogleMapsApiKey(_action) {
   try {
-    const response = yield call(http.get, '/settings/google-maps-api-key');
-    const data = mapKeys(response.data, (_val, key) => camelCase(key));
-
-    console.log(data);
-
-    yield put(getGoogleMapsApiKey({status: 'success', payload: data}));
+    // Call the API
+    const {data} = yield call(http.get, '/settings/google-maps-api-key');
+    // Handle success
+    yield put(getGoogleMapsApiKeySuccess(data));
   } catch (error) {
-    const message = error.response.data.message;
-    yield put(getGoogleMapsApiKey({status: 'failure', error: message}));
-    yield put(addStatusMessage({status: 'error', message}));
+    // Handle errors
+    const payload = error.response.data;
+    yield put(getGoogleMapsApiKeyFailure(payload));
+    yield put(addStatusMessage('error', payload.message));
   }
 }
 
+/**
+ * Handles all requests to update the Google Maps API key on the server
+ * @param {Object} action - The Redux action object triggering this call
+ * @param {Object} action.type - The Redux action type
+ * @param {Object} action.payload - The data passed with the Redux action
+ * @param {string} action.payload.googleMapsApiKey - The Google Maps API key to send to the server
+ */
 function* watchSetGoogleMapsApiKey({payload}) {
   try {
-    const response = yield call(http.post, '/settings/google-maps-api-key', {
-      'google-maps-api-key': payload.googleMapsApiKey,
+    // Call the API
+    const {data} = yield call(http.post, '/settings/google-maps-api-key', {
+      googleMapsApiKey: payload.googleMapsApiKey,
     });
-    const data = mapKeys(response.data, (_val, key) => camelCase(key));
-
-    yield put(setGoogleMapsApiKey({status: 'success', payload: data}));
-    yield put(
-      addStatusMessage({
-        status: 'success',
-        message: 'Successfully updated Google Maps API Key.',
-      })
-    );
+    // Handle success
+    yield put(setGoogleMapsApiKeySuccess(data));
+    yield put(addStatusMessage('success', data.message));
   } catch (error) {
-    const message = error.response.data.message;
-    yield put(setGoogleMapsApiKey({status: 'failure', error: message}));
-    yield put(addStatusMessage({status: 'error', message}));
+    // Handle errors
+    const payload = error.response.data;
+    yield put(setGoogleMapsApiKeyFailure(payload));
+    yield put(addStatusMessage('error', payload.message));
   }
 }
 
+/**
+ * The root saga for everything grouped under settings
+ */
 function* settingsSaga() {
   yield takeEvery('GET_GOOGLE_MAPS_API_KEY', watchGetGoogleMapsApiKey);
   yield takeLatest('SET_GOOGLE_MAPS_API_KEY', watchSetGoogleMapsApiKey);

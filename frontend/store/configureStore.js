@@ -4,6 +4,10 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import rootReducer from 'store/rootReducer';
 import rootSaga from 'store/rootSaga';
 
+/**
+ * Configures the Redux store
+ * @param {Object} preloadedState - The initial Redux state for the application to hydrate
+ */
 function configureStore(preloadedState) {
   const sagaMiddleware = createSagaMiddleware();
   const composeEnhancers = composeWithDevTools({

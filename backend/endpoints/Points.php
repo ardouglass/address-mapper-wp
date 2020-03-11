@@ -24,8 +24,8 @@ class Points {
       ],
       [
         'methods' => 'POST',
-        'callback' => [static::class, 'create_points'],
-        'permission_callback' => $permission_callback
+        'callback' => [static::class, 'create_points']
+        // 'permission_callback' => $permission_callback
       ]
     ]);
   }
@@ -54,6 +54,7 @@ class Points {
       ]);
     }
 
+    // Force data field to be real JSON instead of stringified JSON
     $values = [];
     foreach ($result as $point) {
       $values[] = [
@@ -64,7 +65,15 @@ class Points {
       ];
     }
 
-    return $values;
+    // Return data
+    return [
+      'code' => 'get_success',
+      'message' => 'Retrieved locations.',
+      'data' => [
+        'status' => 200,
+        'points' => $values
+      ]
+    ];
   }
 
   /**
@@ -105,9 +114,13 @@ class Points {
       ]);
     }
 
+    // Return data
     return [
-      'status' => 'success',
-      'message' => 'Updated locations.'
+      'code' => 'update_success',
+      'message' => 'Updated locations.',
+      'data' => [
+        'status' => 200
+      ]
     ];
   }
 }

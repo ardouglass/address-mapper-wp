@@ -66,8 +66,8 @@ class Core {
     $base_url = '/wp-json/' . Config::$endpoints_base;
     $nonce = wp_create_nonce('wp_rest');
     $google_maps_api_key = Endpoints\Settings::get_google_maps_api_key()[
-      'google-maps-api-key'
-    ];
+      'data'
+    ]['googleMapsApiKey'];
 
     wp_localize_script(
       'address-mapper-admin-scripts',

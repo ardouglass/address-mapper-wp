@@ -7,8 +7,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  removeMessageByIndex: index =>
-    dispatch(clearStatusMessage({payload: {index}})),
+  removeMessageByIndex: index => dispatch(clearStatusMessage(index)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageArea);

@@ -48,9 +48,10 @@ class Settings {
     $result = $wpdb->get_var(
       "SELECT key_value
         FROM $address_mapper_settings_table
-        WHERE key_name = 'google-maps-api-key'"
+        WHERE key_name = 'googleMapsApiKey'"
     );
 
+    // Handle errors
     if ($result === false) {
       return new \WP_Error(
         'get_error',
@@ -59,7 +60,15 @@ class Settings {
       );
     }
 
-    return ['google-maps-api-key' => $result];
+    // Return data
+    return [
+      'code' => 'get_success',
+      'message' => 'Retrieved Google Maps API Key.',
+      'data' => [
+        'status' => 200,
+        'googleMapsApiKey' => $result
+      ]
+    ];
   }
 
   /**
@@ -71,26 +80,35 @@ class Settings {
 
     // Get the posted data
     $params = $request->get_json_params();
-    $google_maps_api_key = $params['google-maps-api-key'];
+    $google_maps_api_key = $params['googleMapsApiKey'];
 
     // Upsert into the database
     $result = $wpdb->replace(
       $address_mapper_settings_table,
       [
-        'key_name' => 'google-maps-api-key',
+        'key_name' => 'googleMapsApiKey',
         'key_value' => $google_maps_api_key
       ],
       ['%s', '%s']
     );
 
+    // Handle errors
     if ($result === false) {
       return new \WP_Error(
         'update_error',
-        'Unable to update the Google Maps API key.',
+        'Unable to update Google Maps API key.',
         ['status' => 500]
       );
     }
 
-    return ['google-maps-api-key' => $google_maps_api_key];
+    // Return data
+    return [
+      'code' => 'update_success',
+      'message' => 'Successfully updated Google Maps API Key.',
+      'data' => [
+        'status' => 200,
+        'googleMapsApiKey' => $google_maps_api_key
+      ]
+    ];
   }
 }
