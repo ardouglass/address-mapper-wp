@@ -1,42 +1,73 @@
-/*
- * Action creators
+/**
+ * Provides a helper for the GET_GOOGLE_MAPS_API_KEY action
+ * @returns {Object} The GET_GOOGLE_MAPS_API_KEY action
  */
-function getGoogleMapsApiKey({status, payload}) {
-  console.log(payload);
-  switch (status) {
-    case 'success':
-      return {
-        type: 'GET_GOOGLE_MAPS_API_KEY_SUCCESS',
-        payload,
-      };
-    case 'failure':
-      return {
-        type: 'GET_GOOGLE_MAPS_API_KEY_FAILURE',
-        payload,
-      };
-    default:
-      return {type: 'GET_GOOGLE_MAPS_API_KEY'};
-  }
-}
+export const getGoogleMapsApiKey = () => ({type: 'GET_GOOGLE_MAPS_API_KEY'});
 
-function setGoogleMapsApiKey({status, payload}) {
-  switch (status) {
-    case 'success':
-      return {
-        type: 'SET_GOOGLE_MAPS_API_KEY_SUCCESS',
-        payload,
-      };
-    case 'failure':
-      return {
-        type: 'SET_GOOGLE_MAPS_API_KEY_FAILURE',
-        payload,
-      };
-    default:
-      return {
-        type: 'SET_GOOGLE_MAPS_API_KEY',
-        payload,
-      };
-  }
-}
+/**
+ * Provides a helper for the GET_GOOGLE_MAPS_API_KEY_SUCCESS action
+ * @param {Object} payload - The payload to pass along in the action
+ * @param {string} payload.code - The response code
+ * @param {string} payload.message - The response message
+ * @param {Object} payload.data - The data from the response
+ * @param {string} payload.data.status - The HTTP status code
+ * @param {string} payload.data.googleMapsApiKey - The Google Maps API key
+ * @returns {Object} The GET_GOOGLE_MAPS_API_KEY_SUCCESS action
+ */
+export const getGoogleMapsApiKeySuccess = payload => ({
+  type: 'GET_GOOGLE_MAPS_API_KEY_SUCCESS',
+  payload,
+});
 
-export {getGoogleMapsApiKey, setGoogleMapsApiKey};
+/**
+ * Provides a helper for the GET_GOOGLE_MAPS_API_KEY_FAILURE action
+ * @param {Object} payload - The payload to pass along in the action
+ * @param {string} payload.code - The response code
+ * @param {string} payload.message - The response message
+ * @param {Object} payload.data - The data from the response
+ * @param {string} payload.data.status - The HTTP status code
+ * @returns {Object} The GET_GOOGLE_MAPS_API_KEY_FAILURE action
+ */
+export const getGoogleMapsApiKeyFailure = payload => ({
+  type: 'GET_GOOGLE_MAPS_API_KEY_FAILURE',
+  payload,
+});
+
+/**
+ * Provides a helper for the SET_GOOGLE_MAPS_API_KEY action
+ * @param {Object} payload - The payload to pass along in the action
+ * @param {string} payload.googleMapsApiKey - The new Google Maps API key to send to the server
+ * @returns {Object} The SET_GOOGLE_MAPS_API_KEY action
+ */
+export const setGoogleMapsApiKey = payload => ({
+  type: 'SET_GOOGLE_MAPS_API_KEY',
+  payload,
+});
+
+/**
+ * Provides a helper for the SET_GOOGLE_MAPS_API_KEY_SUCCESS action
+ * @param {Object} payload - The payload to pass along in the action
+ * @param {string} payload.code - The response code
+ * @param {string} payload.message - The response message
+ * @param {Object} payload.data - The data from the response
+ * @param {string} payload.data.status - The HTTP status code
+ * @returns {Object} The SET_GOOGLE_MAPS_API_KEY_SUCCESS action
+ */
+export const setGoogleMapsApiKeySuccess = payload => ({
+  type: 'SET_GOOGLE_MAPS_API_KEY_SUCCESS',
+  payload,
+});
+
+/**
+ * Provides a helper for the SET_GOOGLE_MAPS_API_KEY_FAILURE action
+ * @param {Object} payload - The payload to pass along in the action
+ * @param {string} payload.code - The response code
+ * @param {string} payload.message - The response message
+ * @param {Object} payload.data - The data from the response
+ * @param {string} payload.data.status - The HTTP status code
+ * @returns {Object} The SET_GOOGLE_MAPS_API_KEY_FAILURE action
+ */
+export const setGoogleMapsApiKeyFailure = payload => ({
+  type: 'SET_GOOGLE_MAPS_API_KEY_FAILURE',
+  payload,
+});
