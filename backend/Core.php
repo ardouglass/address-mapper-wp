@@ -68,6 +68,7 @@ class Core {
     $google_maps_api_key = Endpoints\Settings::get_google_maps_api_key()[
       'data'
     ]['googleMapsApiKey'];
+    $points_ids = Endpoints\Points::get_points_ids()['data']['ids'];
 
     wp_localize_script(
       'address-mapper-admin-scripts',
@@ -75,7 +76,8 @@ class Core {
       [
         'baseUrl' => $base_url,
         'nonce' => $nonce,
-        'googleMapsApiKey' => $google_maps_api_key
+        'googleMapsApiKey' => $google_maps_api_key,
+        'idsToIgnore' => $points_ids
       ]
     );
   }
