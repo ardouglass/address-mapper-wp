@@ -85,5 +85,6 @@ class Core {
    */
   public function register_endpoints() {
     Endpoints\Settings::google_maps_api_key_routes();
+    Endpoints\Points::points_routes();
   }
 }

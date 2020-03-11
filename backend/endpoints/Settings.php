@@ -51,6 +51,14 @@ class Settings {
         WHERE key_name = 'google-maps-api-key'"
     );
 
+    if ($result === false) {
+      return new \WP_Error(
+        'get_error',
+        'Unable to get the Google Maps API key.',
+        ['status' => 500]
+      );
+    }
+
     return ['google-maps-api-key' => $result];
   }
 
