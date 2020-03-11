@@ -24,8 +24,16 @@ class Points {
       ],
       [
         'methods' => 'POST',
-        'callback' => [static::class, 'create_points']
-        // 'permission_callback' => $permission_callback
+        'callback' => [static::class, 'create_points'],
+        'permission_callback' => $permission_callback
+      ]
+    ]);
+
+    register_rest_route(Config::$endpoints_base, '/points/ids', [
+      [
+        'methods' => 'GET',
+        'callback' => [static::class, 'get_points_ids'],
+        'permission_callback' => $permission_callback
       ]
     ]);
   }
@@ -36,10 +44,6 @@ class Points {
   public static function get_points($request) {
     global $wpdb;
     $address_mapper_table = $wpdb->prefix . 'address_mapper';
-
-    // Get the posted data
-    $params = $request->get_json_params();
-    $points = $params['points'];
 
     // Build the query
     $query = "SELECT * FROM $address_mapper_table";
@@ -120,6 +124,37 @@ class Points {
       'message' => 'Updated locations.',
       'data' => [
         'status' => 200
+      ]
+    ];
+  }
+
+  /**
+   * Gets the points in the database.
+   */
+  public static function get_points_ids($request = null) {
+    global $wpdb;
+    $address_mapper_table = $wpdb->prefix . 'address_mapper';
+
+    // Build the query
+    $query = "SELECT id FROM $address_mapper_table";
+
+    // Run the query
+    $result = $wpdb->get_col($query);
+
+    // Handle errors
+    if ($result === false) {
+      return new \WP_Error('get_error', 'Unable to get location ids.', [
+        'status' => 500
+      ]);
+    }
+
+    // Return data
+    return [
+      'code' => 'get_success',
+      'message' => 'Retrieved locations.',
+      'data' => [
+        'status' => 200,
+        'ids' => $result
       ]
     ];
   }
