@@ -30,7 +30,7 @@ function Navigation() {
 
   return (
     <React.Fragment>
-      <h3 className="nav-tab-wrapper">{tabs}</h3>
+      <nav className="nav-tab-wrapper">{tabs}</nav>
       <ActiveContent />
     </React.Fragment>
   );
