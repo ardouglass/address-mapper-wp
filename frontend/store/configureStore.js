@@ -7,6 +7,7 @@ import rootSaga from 'store/rootSaga';
 /**
  * Configures the Redux store
  * @param {Object} preloadedState - The initial Redux state for the application to hydrate
+ * @returns {Store} The Redux store
  */
 function configureStore(preloadedState) {
   const sagaMiddleware = createSagaMiddleware();

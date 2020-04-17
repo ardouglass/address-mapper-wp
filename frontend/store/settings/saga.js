@@ -1,5 +1,5 @@
 import {put, call, takeEvery, takeLatest} from 'redux-saga/effects';
-import http from 'utils/http';
+import httpWP from 'utils/httpWP';
 import {addStatusMessage} from 'store/statusMessages/actions';
 import {
   getGoogleMapsApiKeySuccess,
@@ -10,12 +10,11 @@ import {
 
 /**
  * Handles all requests to query the Google Maps API key from the server
- * @param {Object} _action - The Redux action object triggering this call
  */
-function* watchGetGoogleMapsApiKey(_action) {
+function* watchGetGoogleMapsApiKey() {
   try {
     // Call the API
-    const {data} = yield call(http.get, '/settings/google-maps-api-key');
+    const {data} = yield call(httpWP.get, '/settings/google-maps-api-key');
     // Handle success
     yield put(getGoogleMapsApiKeySuccess(data));
   } catch (error) {
@@ -36,7 +35,7 @@ function* watchGetGoogleMapsApiKey(_action) {
 function* watchSetGoogleMapsApiKey({payload}) {
   try {
     // Call the API
-    const {data} = yield call(http.post, '/settings/google-maps-api-key', {
+    const {data} = yield call(httpWP.post, '/settings/google-maps-api-key', {
       googleMapsApiKey: payload.googleMapsApiKey,
     });
     // Handle success

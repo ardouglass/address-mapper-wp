@@ -1,9 +1,10 @@
 /**
  * Status Messages Redux reducer
- * @param {Object} state - The settings Redux state
+ * @param {Object} state - The statusMessages Redux state
  * @param {Object} action - The Redux action object triggering this call
  * @param {Object} action.type - The Redux action type
  * @param {Object} action.payload - The data passed with the Redux action
+ * @returns {Object} The new statusMessages state for the Redux store
  */
 function statusMessagesReducer(state = [], {type, payload}) {
   switch (type) {

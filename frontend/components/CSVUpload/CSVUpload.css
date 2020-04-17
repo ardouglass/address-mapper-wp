@@ -1,0 +1,25 @@
+.dropzone {
+  width: 100%;
+  box-sizing: border-box;
+  height: 208px;
+  border: 4px dashed #b4b9be;
+  text-align: center;
+}
+
+.dropzone :global(p) {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.activeDropzone {
+  border-color: #83b4d8;
+}
+
+.dropzoneDetails {
+  margin: 60px auto 0;
+  width: 250px;
+}
+
+.dropzone .dropzoneHeader {
+  font-size: 20px;
+}
