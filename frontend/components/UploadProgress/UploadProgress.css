@@ -1,0 +1,9 @@
+.progressBar {
+  height: 10px;
+  width: 100%;
+}
+
+.progressText {
+  font-size: 20px;
+  margin: 0.25em 0;
+}

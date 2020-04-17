@@ -69,6 +69,8 @@ class Core {
       'data'
     ]['googleMapsApiKey'];
     $points_ids = Endpoints\Points::get_points_ids()['data']['ids'];
+    $updated_by = get_option('address_mapper_updated_by', null);
+    $updated_at = get_option('address_mapper_updated_at', null);
 
     wp_localize_script(
       'address-mapper-admin-scripts',
@@ -77,7 +79,9 @@ class Core {
         'baseUrl' => $base_url,
         'nonce' => $nonce,
         'googleMapsApiKey' => $google_maps_api_key,
-        'idsToIgnore' => $points_ids
+        'existingIds' => $points_ids,
+        'lastUpdatedDate' => $updated_at,
+        'lastUpdatedUser' => $updated_by
       ]
     );
   }

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import clsx from 'clsx';
-import UploadPage from 'pages/UploadPage';
+import AddressesPage from 'pages/AddressesPage';
 import SettingsPage from 'pages/SettingsPage';
 import styles from './Navigation.css';
 
@@ -8,7 +8,7 @@ function Navigation() {
   const [activeTab, setActiveTab] = useState(0);
 
   const tabOptions = [
-    {title: 'Upload Data', component: UploadPage},
+    {title: 'Addresses', component: AddressesPage},
     {title: 'Settings', component: SettingsPage},
   ];
 
