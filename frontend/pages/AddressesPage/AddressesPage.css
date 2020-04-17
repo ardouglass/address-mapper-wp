@@ -1,0 +1,68 @@
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+  grid-gap: 20px;
+  justify-content: start;
+  margin: 20px 0;
+}
+
+@media (max-width: 782px) {
+  .metrics {
+    grid-gap: 12px;
+    margin: 12px 0;
+  }
+}
+
+.card {
+  margin: 0;
+  max-width: none;
+  padding: calc(1.5rem + 1.25em);
+  text-align: center;
+}
+
+.label {
+  margin: 1rem 0 0;
+  color: #fff;
+}
+
+.icon {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+}
+
+.value {
+  font-size: 30px;
+  font-weight: bold;
+  margin: 0;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.error {
+  background-color: #dc3232;
+}
+
+.warning {
+  background-color: #ffb900;
+}
+
+.success {
+  background-color: #46b450;
+}
+
+.info {
+  background-color: #00a0d2;
+}
+
+.special {
+  background-color: #826eb4;
+}
+
+.error,
+.warning,
+.success,
+.info,
+.special {
+  color: #fff;
+}

@@ -12,7 +12,7 @@ function MessageArea({messages, removeMessageByIndex}) {
     />
   ));
 
-  return <div>{messageComponents}</div>;
+  return messageComponents.length ? <div>{messageComponents}</div> : null;
 }
 
 MessageArea.propTypes = {
