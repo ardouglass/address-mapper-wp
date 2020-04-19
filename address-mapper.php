@@ -7,6 +7,8 @@
  * Author URI:        https://dou.glass/
  * License:           GPL v3 or later
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
+ * Requires at least: 5.4
+ * Tested up to:      5.4
  */
 
 // If this file is called directly, abort.
