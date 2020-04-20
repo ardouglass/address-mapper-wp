@@ -9,6 +9,7 @@
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
  * Requires at least: 5.4
  * Tested up to:      5.4
+ * Version:           0.1.0
  */
 
 // If this file is called directly, abort.
@@ -19,6 +20,7 @@ if (!defined('WPINC')) {
 // Autoload all the things.
 require_once 'vendor/autoload.php';
 
+use AddressMapper\Core;
 use AddressMapper\Lifecycle\Activator;
 use AddressMapper\Lifecycle\Uninstaller;
 
@@ -42,7 +44,7 @@ register_uninstall_hook(__FILE__, [Uninstaller::class, 'uninstall']);
  * Begins execution of the plugin.
  */
 function run_address_mapper() {
-  $address_mapper = new AddressMapper\Core();
+  $address_mapper = new Core();
   $address_mapper->run();
 }
 

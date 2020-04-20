@@ -3,8 +3,8 @@
 namespace AddressMapper;
 
 use AddressMapper\Config;
-use AddressMapper\Endpoints\Points as PointsAPI;
-use AddressMapper\Endpoints\Settings as SettingsAPI;
+use AddressMapper\Endpoints\Points;
+use AddressMapper\Endpoints\Settings;
 
 /**
  * Runs the plugin.
@@ -66,10 +66,10 @@ class Core {
   private function hydrate_scripts() {
     $base_url = '/wp-json/' . Config::$endpoints_base;
     $nonce = wp_create_nonce('wp_rest');
-    $google_maps_api_key = SettingsAPI::get_google_maps_api_key()['data'][
+    $google_maps_api_key = Settings::get_google_maps_api_key()['data'][
       'googleMapsApiKey'
     ];
-    $points_ids = PointsAPI::get_points_ids()['data']['ids'];
+    $points_ids = Points::get_points_ids()['data']['ids'];
     $updated_by = get_option('address_mapper_updated_by', null);
     $updated_at = get_option('address_mapper_updated_at', null);
 
@@ -91,7 +91,7 @@ class Core {
    * Loads the REST endpoints for the plugin.
    */
   public function register_endpoints() {
-    SettingsAPI::google_maps_api_key_routes();
-    PointsAPI::points_routes();
+    Settings::google_maps_api_key_routes();
+    Points::points_routes();
   }
 }
