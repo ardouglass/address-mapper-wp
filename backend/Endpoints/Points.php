@@ -20,7 +20,8 @@ class Points {
     register_rest_route(Config::$endpoints_base, '/points', [
       [
         'methods' => 'GET',
-        'callback' => [static::class, 'get_points']
+        'callback' => [static::class, 'get_points'],
+        'permission_callback' => $permission_callback
       ],
       [
         'methods' => 'POST',
@@ -37,10 +38,23 @@ class Points {
       ]
     ]);
 
-    register_rest_route(Config::$endpoints_base, '/points/geojson', [
+    // Check permissions internally to process results differently
+    // Match /geojson/{lat},{lng}/{radius}
+    register_rest_route(
+      Config::$endpoints_base,
+      '/geojson/(?P<lat>-?[\d]{1,2}(\.\d+)?),(?P<lng>-?[\d]{1,3}(\.\d+)?)/(?P<radius>[\d]+([.][\d]+)?)',
+      [
+        [
+          'methods' => 'GET',
+          'callback' => [static::class, 'get_geojson']
+        ]
+      ]
+    );
+
+    register_rest_route(Config::$endpoints_base, '/geojson', [
       [
         'methods' => 'GET',
-        'callback' => [static::class, 'get_points_geojson']
+        'callback' => [static::class, 'get_geojson']
       ]
     ]);
   }
@@ -184,12 +198,26 @@ class Points {
   /**
    * Gets the geojson from the database.
    */
-  public static function get_points_geojson($request) {
+  public static function get_geojson($request) {
     global $wpdb;
     $address_mapper_table = $wpdb->prefix . 'address_mapper';
 
     // Build the query
     $query = "SELECT * FROM $address_mapper_table";
+
+    // Narrow down the query if a certain point and radius is being requested
+    if ($request['lat'] && $request['lng'] && $request['radius']) {
+      $latitude = $request['lat'];
+      $longitude = $request['lng'];
+      $radius = $request['radius'];
+
+      // Use 6371 instead of 3959 to swap to kilometers
+      $query = "SELECT *, (3959 * acos(cos(radians($latitude)) * cos(radians(lat))
+      * cos(radians(lng) - radians($longitude)) + sin(radians($latitude)) * sin(radians(lat)))) AS distance
+      FROM $address_mapper_table
+      HAVING distance < $radius
+      ORDER BY distance";
+    }
 
     // Run the query
     $result = $wpdb->get_results($query);
