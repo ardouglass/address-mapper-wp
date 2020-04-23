@@ -1,10 +1,11 @@
 const path = require('path');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 module.exports = {
   mode: 'development',
   entry: './frontend/index.js',
   output: {
-    filename: 'address-mapper.min.js',
+    filename: 'address-mapper.[contenthash].js',
     path: path.resolve(__dirname, './dist'),
   },
   resolve: {
@@ -16,6 +17,7 @@ module.exports = {
       store: path.resolve(__dirname, 'frontend/store/'),
     },
   },
+  plugins: [new CleanWebpackPlugin()],
   module: {
     rules: [
       {
