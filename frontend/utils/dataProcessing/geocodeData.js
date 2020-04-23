@@ -15,6 +15,11 @@ const _geocodeData = async (data, key) => {
     {params: {address, key}}
   );
 
+  // If there's an error message, we can't continue
+  if (response.data.error_message) {
+    throw new Error(`Google Maps API error: ${response.data.error_message}`);
+  }
+
   const latLng = response.data.results[0].geometry.location;
 
   return {...latLng, ...data};
