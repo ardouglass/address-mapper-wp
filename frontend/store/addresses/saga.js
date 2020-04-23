@@ -106,30 +106,35 @@ function* watchCompletedParsingCSV({payload}) {
 function* watchCompletedPreparingData({payload}) {
   yield put(updateProcessingPercentage(10, 'geocoding'));
 
-  const googleMapsAPIKey = yield select(getGoogleMapsApiKey);
-  const chunkedRows = chunk(payload.data, 25);
+  try {
+    const googleMapsAPIKey = yield select(getGoogleMapsApiKey);
+    const chunkedRows = chunk(payload.data, 25);
 
-  const numChunks = chunkedRows.length;
-  let chunksGeocoded = 0;
-  let percentComplete = 10; // The first 10% was processing the file
-  for (const rows of chunkedRows) {
-    const geocodedChunk = yield call(geocodeChunks, rows, googleMapsAPIKey);
+    const numChunks = chunkedRows.length;
+    let chunksGeocoded = 0;
+    let percentComplete = 10; // The first 10% was processing the file
+    for (const rows of chunkedRows) {
+      const geocodedChunk = yield call(geocodeChunks, rows, googleMapsAPIKey);
 
-    // Put geocoded addresses in the store
-    yield put(addAddressesToUploadStack(geocodedChunk));
+      // Put geocoded addresses in the store
+      yield put(addAddressesToUploadStack(geocodedChunk));
 
-    // Update percent complete if it has changed
-    chunksGeocoded++;
-    const newPercentComplete =
-      Math.floor((chunksGeocoded / numChunks) * 80) + 10; // The middle 80% is geocoding
-    if (newPercentComplete !== percentComplete) {
-      percentComplete = newPercentComplete;
-      yield put(updateProcessingPercentage(percentComplete));
+      // Update percent complete if it has changed
+      chunksGeocoded++;
+      const newPercentComplete =
+        Math.floor((chunksGeocoded / numChunks) * 80) + 10; // The middle 80% is geocoding
+      if (newPercentComplete !== percentComplete) {
+        percentComplete = newPercentComplete;
+        yield put(updateProcessingPercentage(percentComplete));
+      }
     }
-  }
 
-  // It should be safe to upload the data now
-  yield put(completedGeocoding());
+    // It should be safe to upload the data now
+    yield put(completedGeocoding());
+  } catch (error) {
+    yield put(addStatusMessage('error', error.message));
+    yield put(completedProcessingFile(false));
+  }
 }
 
 /**
