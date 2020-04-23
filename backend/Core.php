@@ -51,19 +51,42 @@ class Core {
   public function enqueue_scripts() {
     $current_screen_id = get_current_screen()->id;
     if ($current_screen_id == 'toplevel_page_address_mapper') {
-      wp_enqueue_script(
-        'address-mapper-admin-scripts',
-        Config::$plugin_base_url . 'dist/address-mapper.min.js',
-        [],
-        null,
-        true
-      );
+      $dirJS = new \DirectoryIterator(realpath(dirname(__FILE__) . '/../dist'));
 
-      $this->hydrate_scripts();
+      foreach ($dirJS as $file) {
+        if (pathinfo($file, PATHINFO_EXTENSION) === 'js') {
+          $fullName = basename($file);
+          $name = substr(
+            basename($fullName),
+            0,
+            strpos(basename($fullName), '.')
+          );
+
+          switch ($name) {
+            case 'address-mapper':
+              $deps = null; // array of dependency file basenames to add
+              break;
+
+            default:
+              $deps = null;
+              break;
+          }
+
+          wp_enqueue_script(
+            $name,
+            Config::$plugin_base_url . 'dist/' . $fullName,
+            $deps,
+            null,
+            true
+          );
+        }
+      }
+
+      $this->hydrate_scripts('address-mapper');
     }
   }
 
-  private function hydrate_scripts() {
+  private function hydrate_scripts($script_name) {
     $base_url = '/wp-json/' . Config::$endpoints_base;
     $nonce = wp_create_nonce('wp_rest');
     $google_maps_api_key = Settings::get_google_maps_api_key()['data'][
@@ -73,18 +96,14 @@ class Core {
     $updated_by = get_option('address_mapper_updated_by', null);
     $updated_at = get_option('address_mapper_updated_at', null);
 
-    wp_localize_script(
-      'address-mapper-admin-scripts',
-      'addressMapperApiSettings',
-      [
-        'baseUrl' => $base_url,
-        'nonce' => $nonce,
-        'googleMapsApiKey' => $google_maps_api_key,
-        'existingIds' => $points_ids,
-        'lastUpdatedDate' => $updated_at,
-        'lastUpdatedUser' => $updated_by
-      ]
-    );
+    wp_localize_script($script_name, 'addressMapperApiSettings', [
+      'baseUrl' => $base_url,
+      'nonce' => $nonce,
+      'googleMapsApiKey' => $google_maps_api_key,
+      'existingIds' => $points_ids,
+      'lastUpdatedDate' => $updated_at,
+      'lastUpdatedUser' => $updated_by
+    ]);
   }
 
   /**
