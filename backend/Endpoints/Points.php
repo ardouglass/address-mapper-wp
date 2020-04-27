@@ -255,20 +255,10 @@ class Points {
       'features' => $values
     ];
 
-    // Return data
-    $full_response = [
-      'code' => 'get_success',
-      'message' => 'Retrieved locations.',
-      'data' => [
-        'status' => 200,
-        'geojson' => $geojson
-      ]
-    ];
-
     add_filter(
       'rest_pre_serve_request',
-      function () use ($full_response) {
-        echo json_encode($full_response, JSON_NUMERIC_CHECK);
+      function () use ($geojson) {
+        echo json_encode($geojson, JSON_NUMERIC_CHECK);
         return true;
       },
       10,
