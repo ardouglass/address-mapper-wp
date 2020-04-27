@@ -35,6 +35,7 @@ function addressesReducer(state = {}, {type, payload}) {
     case 'COMPLETED_PROCESSING_FILE':
       return {
         ...state,
+        readyToUpload: [],
         processing: {
           ...state.processing,
           errorsProcessing: !payload.successful,
