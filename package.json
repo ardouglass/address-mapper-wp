@@ -32,7 +32,7 @@
     "clsx": "^1.1.0",
     "crypto-js": "^4.0.0",
     "date-fns": "^2.11.0",
-    "lodash-es": "^4.17.15",
+    "lodash-es": "^4.17.21",
     "papaparse": "^5.2.0",
     "prop-types": "^15.7.2",
     "rc-progress": "^2.5.2",
